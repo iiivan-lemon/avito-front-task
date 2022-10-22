@@ -6,6 +6,9 @@ import Main from './Main';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import Routes from "./Routes";
+import './fonts/DrukTextWide-Bold.woff';
+import './fonts/JTUSjIg1_i6t8kCHKm459W1hyzbi.woff2';
+import './fonts/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2'
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
