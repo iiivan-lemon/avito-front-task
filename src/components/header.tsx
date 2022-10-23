@@ -1,5 +1,5 @@
 import * as React from "react";
-import './header.scss'
+import './header.css'
 import Refresh from "./refresh";
 import {useHistory} from "react-router";
 import {useEffect, useState} from "react";

@@ -1,21 +1,26 @@
 import React from "react";
-import "./index.css"
-
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Main  from "./Main";
-import {Switch} from "react-router";
+import { Route, Switch } from "react-router-dom";
+import HomePage from "./Main";
 import ItemPage from "./itemPage";
+import Main from "./Main";
+const Routes: React.FC = () => (
+	<div>
+		<Switch>
+			<Route
+				exact
+				path="/"
+				render={() => (
+						<Main/>
+				)}
+			/>
+			<Route
+				path="/cart"
+				render={() => (
+					<ItemPage/>
+				)}
+			/>
+		</Switch>
+	</div>
+);
 
-
-export default function Routes() {
-	return (
-		<Router>
-			<main>
-				<Switch>
-					<Route exact path='/page' component={ ItemPage } />
-					<Route path="/" exact component={Main} />
-				</Switch>
-			</main>
-		</Router>
-	);
-}
+export default Routes;

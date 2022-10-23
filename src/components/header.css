@@ -1,4 +1,4 @@
-.header {
+.header{
   padding: 1rem 3rem;
   position: sticky;
   top: 0;
@@ -10,7 +10,7 @@
   justify-content: flex-start;
 }
 
-.header2 {
+.header2{
   padding: 2rem 3rem;
   position: sticky;
   top: 0;
@@ -23,16 +23,13 @@
   background-color: #efefef;
 }
 
-.home {
+.home{
   fill: black;
   cursor: pointer;
   padding-inline-end: 2rem;
 }
-
-.home2 {
+.home2{
   fill: white;
   cursor: pointer;
   padding-inline-end: 2rem;
 }
-
-/*# sourceMappingURL=header.css.map */

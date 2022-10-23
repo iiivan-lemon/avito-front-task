@@ -1,5 +1,5 @@
 import * as React from "react";
-import './refresh.scss'
+import './refresh.css'
 export default class Refresh extends React.Component <{}> {
 	render() {
 		return (

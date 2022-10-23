@@ -1,17 +1,24 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import { combineReducers } from "redux";
+import {connectRouter, RouterState} from "connected-react-router";
 
-export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-  },
-});
+import { History } from "history";
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+// import inventorySaga from "./inventory/sagas";
+import { PostReducer } from "./store/post/reducer";
+import { PostState } from "./store/post/types";
+
+// import cartSaga from "./cart/sagas";
+// import { cartReducer } from "./cart/reducer";
+// import { cartState } from "./cart/types";
+// import { RouterState } from "connected-react-router";
+
+export interface ApplicationState {
+	post: PostState;
+	router: RouterState;
+}
+
+export const createRootReducer = (history: History) =>
+	combineReducers({
+		post: PostReducer,
+		router: connectRouter(history)
+	});

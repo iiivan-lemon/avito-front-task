@@ -1,25 +1,61 @@
-import React from 'react';
-import logo from './logo.svg';
-import {Counter} from './features/counter/Counter';
+import React, {useEffect} from 'react';
 import './Main.css';
-import {useHistory} from "react-router-dom";
 import Item from "./components/item";
-import Refresh from "./components/refresh";
 import Header from "./components/header";
-import { createBrowserHistory } from 'history';
-const history = createBrowserHistory();
+import {createBrowserHistory} from 'history';
+import {connect} from "react-redux";
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
+import {ApplicationState} from "./app/store";
+import {fetchRequest} from "./app/store/post/action";
+
+interface PropsFromState {
+	loading: boolean;
+	data: [];
+	errors?: string;
+}
+
+interface propsFromDispatch {
+	fetchRequest: () => any;
+}
+
+type AllProps = PropsFromState & propsFromDispatch;
+
+const Main: React.FC<AllProps> = ({
+	                                  loading,
+	                                  errors,
+	                                  data,
+	                                  fetchRequest
+                                  }) => {
+
+	useEffect(() => {
+		fetchRequest();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 
-function Main() {
+	let listData = data.map(postId => <Item postId={postId}/>)
 
 	return (
 		<div>
-			<Header></Header>
-			{[...Array(10)].map((x, i) =>
-				<Item key={i}/>
-			)}
+			<Header/>
+			{listData}
 		</div>
 	);
 }
 
-export default Main;
+const mapStateToProps = ({post}: ApplicationState) => ({
+	loading: post.loading,
+	errors: post.errors,
+	data: post.data
+});
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
+	return {
+		fetchRequest: () => {
+			dispatch(fetchRequest());
+		}
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
