@@ -5,7 +5,7 @@ import { History } from "history";
 
 // import inventorySaga from "./inventory/sagas";
 import { PostReducer } from "./store/post/reducer";
-import { PostState } from "./store/post/types";
+import { PostsIdState } from "./store/post/types";
 
 // import cartSaga from "./cart/sagas";
 // import { cartReducer } from "./cart/reducer";
@@ -13,7 +13,7 @@ import { PostState } from "./store/post/types";
 // import { RouterState } from "connected-react-router";
 
 export interface ApplicationState {
-	post: PostState;
+	post: PostsIdState;
 	router: RouterState;
 }
 

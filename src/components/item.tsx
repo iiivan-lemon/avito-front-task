@@ -1,5 +1,11 @@
 import * as React from "react";
 import './item.css'
+import {useHistory} from "react-router-dom";
+import {Post} from "../app/store/post/types";
+import {ThunkDispatch} from "redux-thunk";
+import {AnyAction} from "redux";
+import {fetchPost, fetchRequest} from "../app/store/post/action";
+import {connect} from "react-redux";
 // import {useHistory} from "react-router";
 // import {useAppDispatch, useAppSelector} from "../app/hooks";
 // import {initState} from "../app/store/modules/posts/reducer/postsReducer";
@@ -21,12 +27,30 @@ import './item.css'
 // }
 //
 //
-const Item = (props:any) => {
+interface propsFromComponent {
+	item: PostID;
+}
+
+interface PostID {
+	postId:number;
+}
+
+interface propsFromDispatch {
+	fetchPost: (item: any) => any;
+}
+
+type Props = propsFromComponent & propsFromDispatch;
+const Item : React.FC<Props> = ({ item, fetchPost }) => {
 	// console.log(props.postId)
-	// let history = useHistory();
-	// function handleClick() {
-	// 	history.push(`/${post.post}`);
-	// }
+	const getPostData = (item: any) => {
+		return fetchPost(item.postId);
+	};
+	console.log('getPostData',getPostData(item));
+	let history = useHistory();
+	function handleClick() {
+		history.push(`/pages`);
+		// запрос на инфу новости
+	}
 	//
 	// const listData = [];
 	//
@@ -67,14 +91,21 @@ const Item = (props:any) => {
 
 
 		return (
-			// <div className={'item'} onClick={handleClick}>
-        <div className={'item'}>
-	        <span className={'title'}>{props.postId}</span>
+			 <div className={'item'} onClick={handleClick}>
+        {/*<div className={'item'}>*/}
+	        <span className={'title'}>{item.postId}</span>
 				{/*<span className={'title'}>{(data as any)['title']}</span>*/}
 				<div className={'item-data'}>listData</div>
 			</div>
 		);
 
 }
-//
-export default Item
+const mapStateToProps = () => {};
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
+	return {
+		fetchPost: (item: number) => dispatch(fetchPost(item))
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Item);
