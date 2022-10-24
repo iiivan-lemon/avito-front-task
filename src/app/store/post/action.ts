@@ -16,10 +16,7 @@ export const fetchRequest: AppThunk = () => {
 		try {
 
 			// 100 последних из всех
-			const resAsk  = await axios.get(`${API_ROUTE}/askstories.json?print=pretty`) // 91
-			const resShow  = await axios.get(`${API_ROUTE}/showstories.json?print=pretty`) //52
-			const resJob  = await axios.get(`${API_ROUTE}/jobstories.json?print=pretty`) //60
-
+			const resAsk  = await axios.get(`${API_ROUTE}/newstories.json?print=pretty`) // 500
 			return dispatch({
 				type: PostActionTypes.FETCH_SUCCESS,
 				payload: resAsk.data
@@ -38,12 +35,12 @@ export const fetchPost: ActionCreator<ThunkAction<
 	Post,
 	Action<string>
 	>> = item => {
-	return (dispatch: Dispatch): Action => {
+	return async (dispatch: Dispatch) => {
 		try {
-			console.log('action ITem',item)
+			const res  = await axios.get(`${API_ROUTE}/item/${item}.json?print=pretty`)
 			return dispatch({
 				type: PostActionTypes.FETCH_POST,
-				payload: 1
+				payload: res.data
 			});
 		} catch (e) {
 			return dispatch({

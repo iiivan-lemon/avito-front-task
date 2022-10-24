@@ -4,7 +4,7 @@ import {connectRouter, RouterState} from "connected-react-router";
 import { History } from "history";
 
 // import inventorySaga from "./inventory/sagas";
-import { PostReducer } from "./store/post/reducer";
+import { PostsIdReducer } from "./store/post/reducer";
 import { PostsIdState } from "./store/post/types";
 
 // import cartSaga from "./cart/sagas";
@@ -19,6 +19,6 @@ export interface ApplicationState {
 
 export const createRootReducer = (history: History) =>
 	combineReducers({
-		post: PostReducer,
+		post: PostsIdReducer,
 		router: connectRouter(history)
 	});

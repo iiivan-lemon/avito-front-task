@@ -22,6 +22,7 @@ export enum PostActionTypes {
 export interface PostsIdState {
 	readonly loading: boolean;
 	readonly data: [];
+	readonly post: Post | null;
 	readonly errors?: string;
 }
 

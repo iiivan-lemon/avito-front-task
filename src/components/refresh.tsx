@@ -1,9 +1,14 @@
 import * as React from "react";
 import './refresh.css'
-export default class Refresh extends React.Component <{}> {
-	render() {
+export default function Refresh (props:any) {
+
+	// clickRefresh(){
+	//
+	// }
+
+
 		return (
-			<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+			<svg onClick={props.refresh} version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
 			     x="0px" y="0px" className={'refresh'}
 			     viewBox="0 0 383.748 383.748" >
 <g>
@@ -14,37 +19,7 @@ export default class Refresh extends React.Component <{}> {
 		c-83.744,0-151.874-68.13-151.874-151.874h-30c0,100.286,81.588,181.874,181.874,181.874c35.038,0,69.062-9.989,98.391-28.888
 		c18.584-11.975,34.707-27.145,47.731-44.706l39.139,38.952V235.742z"/>
 </g>
-				<g>
-</g>
-				<g>
-</g>
-				<g>
-</g>
-				<g>
-</g>
-				<g>
-</g>
-				<g>
-</g>
-				<g>
-</g>
-				<g>
-</g>
-				<g>
-</g>
-				<g>
-</g>
-				<g>
-</g>
-				<g>
-</g>
-				<g>
-</g>
-				<g>
-</g>
-				<g>
-</g>
 </svg>
 		);
-	}
+
 }

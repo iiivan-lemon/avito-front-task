@@ -1,14 +1,18 @@
 import { Reducer } from "redux";
-import { PostActionTypes, PostsIdState } from "./types";
+import {PostActionTypes, PostsIdState, PostState} from "./types";
 
 export const initialState: PostsIdState = {
 	data: [],
+	post: null,
 	errors: undefined,
 	loading: false
 };
 
+
+
 const reducer: Reducer<PostsIdState> = (state = initialState, action) => {
 	switch (action.type) {
+
 		case PostActionTypes.FETCH_REQUEST: {
 			return { ...state, loading: true };
 		}
@@ -19,7 +23,7 @@ const reducer: Reducer<PostsIdState> = (state = initialState, action) => {
 			return { ...state, loading: false, errors: action.payload };
 		}
 		case PostActionTypes.FETCH_POST:{
-			return { ...state, loading: false, errors: action.payload };
+			return { ...state, loading: false, post: action.payload };
 		}
 		case PostActionTypes.FETCH_POST_ERROR:{
 			return { ...state, loading: false, errors: action.payload };
@@ -31,4 +35,5 @@ const reducer: Reducer<PostsIdState> = (state = initialState, action) => {
 	}
 };
 
-export { reducer as PostReducer };
+
+export { reducer as PostsIdReducer };

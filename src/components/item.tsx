@@ -6,6 +6,9 @@ import {ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
 import {fetchPost, fetchRequest} from "../app/store/post/action";
 import {connect} from "react-redux";
+import {ApplicationState} from "../app/store";
+import {FC, useEffect} from "react";
+import {useAppDispatch} from "../app/hooks";
 // import {useHistory} from "react-router";
 // import {useAppDispatch, useAppSelector} from "../app/hooks";
 // import {initState} from "../app/store/modules/posts/reducer/postsReducer";
@@ -28,24 +31,31 @@ import {connect} from "react-redux";
 //
 //
 interface propsFromComponent {
-	item: PostID;
+	postId: number;
+}
+interface PropsFromState {
+	post:Post
 }
 
-interface PostID {
-	postId:number;
-}
 
-interface propsFromDispatch {
-	fetchPost: (item: any) => any;
-}
+// interface propsFromDispatch {
+// 	fetchPost: (item: number) => Post;
+// }
 
-type Props = propsFromComponent & propsFromDispatch;
-const Item : React.FC<Props> = ({ item, fetchPost }) => {
-	// console.log(props.postId)
-	const getPostData = (item: any) => {
-		return fetchPost(item.postId);
-	};
-	console.log('getPostData',getPostData(item));
+type Props = propsFromComponent & PropsFromState;
+const Item: React.FC<Props>  = ({postId,post
+                                }) => {
+
+	// const getPostData = () => {
+	// 	return fetchPost(postId);
+	// };
+	// const dispatch = useAppDispatch();
+	// 	console.log(dispatch(fetchPost(postId)))
+	useEffect(() => {
+		fetchPost(postId)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
 	let history = useHistory();
 	function handleClick() {
 		history.push(`/pages`);
@@ -71,9 +81,8 @@ const Item : React.FC<Props> = ({ item, fetchPost }) => {
 	//
 	// let  data = postData;
 	//
-	// const allowed = ['by', 'time','score'];
-	//
-	//
+	// console.log(data)
+	//  const allowed = ['by', 'time','score'];
 	// 	if(history.location.pathname === '/'){
 	// 		 data = Object.keys(data)
 	// 			.filter(key => allowed.includes(key))
@@ -83,29 +92,35 @@ const Item : React.FC<Props> = ({ item, fetchPost }) => {
 	// 			}, {});
 	//
 	// 	}
+	// 	const listData = [];
 	// for(const prop in data){
 	// 	if(prop !== "title"){
 	// 		listData.push(<span>{prop}: {(data as any)[prop].toString()}</span>)
 	// 	}
 	// }
-
-
+	//
+debugger;
 		return (
 			 <div className={'item'} onClick={handleClick}>
         {/*<div className={'item'}>*/}
-	        <span className={'title'}>{item.postId}</span>
+	        <span className={'title'}>{postId}</span>
 				{/*<span className={'title'}>{(data as any)['title']}</span>*/}
 				<div className={'item-data'}>listData</div>
 			</div>
 		);
 
 }
-const mapStateToProps = () => {};
+const mapStateToProps = ({post}: ApplicationState) => {
+	//console.log(111,post);
+	return ({
+	post: post.post
+})};
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
-	return {
-		fetchPost: (item: number) => dispatch(fetchPost(item))
-	};
-};
+const mapDispatchToProps = () => {};
+// (dispatch: ThunkDispatch<any, any, AnyAction>) => {
+// 	return {
+// 		fetchPost: (item: number) => dispatch(fetchPost(item))
+// 	};
+// };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Item);
