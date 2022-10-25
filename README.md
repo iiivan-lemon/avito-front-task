@@ -1,10 +1,13 @@
-## Available Scripts
+#### запуск
 
 In the project directory, you can run:
 ### `yarn install`
 ### `yarn start`
 
-Runs the app in the development mode.\
+#### деплой 
+[https://elaborate-snickerdoodle-e4955a.netlify.app](https://elaborate-snickerdoodle-e4955a.netlify.app)
+
+Локально
 [http://localhost:3000](http://localhost:3000) 
 
 ### `yarn test`
