@@ -1,0 +1,8 @@
+.refresh{
+  cursor: pointer;
+  height: 2rem;
+}
+
+.refresh:hover{
+    transform: scale(1.1);
+}

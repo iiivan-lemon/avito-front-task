@@ -1,19 +1,13 @@
 import React, {useLayoutEffect} from 'react';
-import logo from './logo.svg';
-//import {Counter} from './features/counter/Counter';
-import './Main.css';
-import {useHistory, useParams} from "react-router-dom";
-import Item from "./components/item";
-import Refresh from "./components/refresh";
-import Header from "./components/header";
-import { createBrowserHistory } from 'history';
-import {ApplicationState} from "./app/store";
+import '../MainPage/Main.css';
+import {useParams} from "react-router-dom";
+import Item from "../../components/item/item";
+import Header from "../../components/header/header";
+import {ApplicationState} from "../../app/store";
 import {ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
-import {fetchPost, fetchRequest} from "./app/store/post/action";
+import {fetchPost} from "../../app/store/post/action";
 import {connect} from "react-redux";
-import {Post} from "./app/store/post/types";
-const history = createBrowserHistory();
 
 
 const ItemPage: React.FC<any> = (props)=> {
@@ -22,7 +16,6 @@ const ItemPage: React.FC<any> = (props)=> {
 		props.fetchPost(Number(params.id))
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
-	console.log('item',props)
 const post = props.posts.find((el: { id: number; }) => el.id.toString() === params.id)
 
 	return (

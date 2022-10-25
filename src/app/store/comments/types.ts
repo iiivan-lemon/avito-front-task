@@ -10,9 +10,13 @@ export interface Post {
 	"url": string
 }
 
-export enum PostActionTypes {
-	FETCH_REQUEST = "@@post/FETCH_REQUEST",
-	FETCH_SUCCESS = "@@post/FETCH_SUCCESS",
+export interface Comment {
+	id: number,
+	idParent: number,
+	post: Post | null
+}
+
+export enum CommentActionTypes {
 	FETCH_ERROR = "@@post/FETCH_ERROR",
 	FETCH_COMMENT = "@@cart/FETCH_COMMENT",
 	FETCH_POST_ERROR = "@@cart/FETCH_POST_ERROR",
@@ -20,6 +24,6 @@ export enum PostActionTypes {
 
 export interface CommentsState {
 	readonly loading: boolean;
-	readonly comments: {id:number,idParent:number,post:Post|null}[];
+	readonly comments: Array<Comment>;
 	readonly errors?: string;
 }

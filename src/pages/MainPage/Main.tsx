@@ -1,14 +1,13 @@
 import React, {useEffect} from 'react';
 import './Main.css';
-import Item from "./components/item";
-import Header from "./components/header";
-import {createBrowserHistory} from 'history';
+import Item from "../../components/item/item";
+import Header from "../../components/header/header";
 import {connect} from "react-redux";
 import {ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
-import {ApplicationState} from "./app/store";
-import {fetchRequest} from "./app/store/post/action";
-import {Post} from "./app/store/post/types";
+import {ApplicationState} from "../../app/store";
+import {fetchRequest} from "../../app/store/post/action";
+import {Post} from "../../app/store/post/types";
 
 interface PropsFromState {
 	loading: boolean;
@@ -37,7 +36,6 @@ const Main: React.FC<AllProps> = ({
 		fetchRequestAuto();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
-
 
 	let listData = posts.map((post) => <Item postData={post.post} postId={post.id} key={post.id}/>)
 	return (

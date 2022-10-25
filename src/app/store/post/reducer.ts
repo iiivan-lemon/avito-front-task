@@ -1,12 +1,11 @@
 import {Reducer} from "redux";
-import {Post, PostActionTypes, PostsState} from "./types";
+import {PostActionTypes, PostsState} from "./types";
 
 export const initialState: PostsState = {
 	posts: [{id: 0, post: null}],
 	errors: undefined,
 	loading: false
 };
-
 
 // @ts-ignore
 const reducer: Reducer<PostsState> = (state = initialState, action) => {
@@ -28,9 +27,12 @@ const reducer: Reducer<PostsState> = (state = initialState, action) => {
 		case PostActionTypes.FETCH_POST: {
 			const newPosts = state.posts.map((post) => {
 				const id: number = post.id;
+
+
 				if (id === 0) {
 					return {id: action.payload.id, post: action.payload}
 				}
+
 				return (
 					id === action.payload.id
 						? {id: action.payload.id, post: action.payload}

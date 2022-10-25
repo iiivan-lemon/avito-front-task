@@ -28,8 +28,7 @@
   cursor: pointer;
   padding-inline-end: 2rem;
 }
-.home2{
-  fill: white;
-  cursor: pointer;
-  padding-inline-end: 2rem;
+
+.home:hover{
+transform: scale(1.1);
 }

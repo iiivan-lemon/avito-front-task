@@ -1,8 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import HomePage from "./Main";
-import ItemPage from "./itemPage";
-import Main from "./Main";
+import ItemPage from "./pages/ItemPage/itemPage";
+import Main from "./pages/MainPage/Main";
 const Routes: React.FC = () => (
 	<div>
 		<Switch>
