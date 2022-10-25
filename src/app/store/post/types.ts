@@ -19,15 +19,9 @@ export enum PostActionTypes {
 	FETCH_POST_ERROR = "@@cart/FETCH_POST_ERROR",
 }
 
-export interface PostsIdState {
+export interface PostsState {
 	readonly loading: boolean;
-	readonly data: [];
-	readonly post: Post | null;
+	readonly posts: {[key:number]:Post|null}[];
 	readonly errors?: string;
 }
 
-export interface PostState {
-	readonly loading: boolean;
-	readonly data: Post;
-	readonly errors?: string;
-}

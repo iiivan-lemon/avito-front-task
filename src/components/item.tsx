@@ -4,11 +4,12 @@ import {useHistory} from "react-router-dom";
 import {Post} from "../app/store/post/types";
 import {ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
-import {fetchPost, fetchRequest} from "../app/store/post/action";
+
 import {connect} from "react-redux";
 import {ApplicationState} from "../app/store";
-import {FC, useEffect} from "react";
+import {FC, useEffect, useLayoutEffect} from "react";
 import {useAppDispatch} from "../app/hooks";
+import {fetchPost} from "../app/store/post/action";
 // import {useHistory} from "react-router";
 // import {useAppDispatch, useAppSelector} from "../app/hooks";
 // import {initState} from "../app/store/modules/posts/reducer/postsReducer";
@@ -33,34 +34,35 @@ import {useAppDispatch} from "../app/hooks";
 interface propsFromComponent {
 	postId: number;
 }
+
 interface PropsFromState {
-	post:Post
+	post: Post
 }
 
 
-// interface propsFromDispatch {
-// 	fetchPost: (item: number) => Post;
-// }
+interface propsFromDispatch {
+	fetchPost: (item: number) => Post;
+}
 
-type Props = propsFromComponent & PropsFromState;
-const Item: React.FC<Props>  = ({postId,post
-                                }) => {
-
+// type Props = propsFromComponent & PropsFromState;
+const Item: React.FC<any> = (props) => {
 	// const getPostData = () => {
 	// 	return fetchPost(postId);
 	// };
 	// const dispatch = useAppDispatch();
 	// 	console.log(dispatch(fetchPost(postId)))
-	useEffect(() => {
-		fetchPost(postId)
+	useLayoutEffect(() => {
+		props.fetchPost(props.postId)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
-
+	console.log(props)
 	let history = useHistory();
+
 	function handleClick() {
 		history.push(`/pages`);
 		// запрос на инфу новости
 	}
+
 	//
 	// const listData = [];
 	//
@@ -79,48 +81,53 @@ const Item: React.FC<Props>  = ({postId,post
 	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	// }, [])
 	//
-	// let  data = postData;
+	let data = props.postData[0];
 	//
 	// console.log(data)
-	//  const allowed = ['by', 'time','score'];
-	// 	if(history.location.pathname === '/'){
-	// 		 data = Object.keys(data)
-	// 			.filter(key => allowed.includes(key))
-	// 			.reduce((obj, key) => {
-	// 				(obj as any)[key] = (data as any)[key];
-	// 				return obj;
-	// 			}, {});
-	//
-	// 	}
-	// 	const listData = [];
-	// for(const prop in data){
-	// 	if(prop !== "title"){
-	// 		listData.push(<span>{prop}: {(data as any)[prop].toString()}</span>)
-	// 	}
-	// }
-	//
-debugger;
-		return (
-			 <div className={'item'} onClick={handleClick}>
-        {/*<div className={'item'}>*/}
-	        <span className={'title'}>{postId}</span>
-				{/*<span className={'title'}>{(data as any)['title']}</span>*/}
-				<div className={'item-data'}>listData</div>
-			</div>
-		);
+	const allowed = ['by', 'time', 'score','title'];
+	if (history.location.pathname === '/' && data) {
+		data = Object.keys(data)
+			.filter(key => allowed.includes(key))
+			.reduce((obj, key) => {
+				(obj as any)[key] = (data as any)[key];
+				return obj;
+			}, {});
+
+	}
+	const listData = [];
+
+	for (const prop in data) {
+
+		if (prop !== "title") {
+			listData.push(<span>{prop}: {(data as any)[prop]?.toString()}</span>)
+		}
+
+
+	}
+
+//
+	debugger;
+	return (
+		<div className={'item'} onClick={handleClick}>
+			{/*<div className={'item'}>*/}
+			{/*  <span className={'title'}>{props.postData[0]?.title}</span>*/}
+			<span className={'title'}>{(data as any)?.title?.toString()}</span>
+			<div className={'item-data'}>{listData}</div>
+		</div>
+	);
 
 }
-const mapStateToProps = ({post}: ApplicationState) => {
+const mapStateToProps = ({posts}: ApplicationState) => {
 	//console.log(111,post);
 	return ({
-	post: post.post
-})};
+		posts: posts.posts
+	})
+};
 
-const mapDispatchToProps = () => {};
-// (dispatch: ThunkDispatch<any, any, AnyAction>) => {
-// 	return {
-// 		fetchPost: (item: number) => dispatch(fetchPost(item))
-// 	};
-// };
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
+	return {
+		fetchPost: (item: string) => dispatch(fetchPost(item))
+	};
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Item);

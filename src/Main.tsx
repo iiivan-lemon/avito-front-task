@@ -12,9 +12,8 @@ import {Post} from "./app/store/post/types";
 
 interface PropsFromState {
 	loading: boolean;
-	data: [];
 	errors?: string;
-	post: Post
+	posts: {[key:number]:Post|null}[];
 }
 
 
@@ -28,8 +27,7 @@ type AllProps = PropsFromState & propsFromDispatch;
 const Main: React.FC<AllProps> = ({
 	                                  loading,
 	                                  errors,
-	                                  data,
-	                                  post,
+	                                  posts,
 	                                  fetchRequestAuto,
 	                                  fetchRequestHand
 
@@ -41,7 +39,7 @@ const Main: React.FC<AllProps> = ({
 	}, [])
 
 
-	let listData = data.map(postId => <Item postId={postId}/>)
+	let listData = posts.map((post) => <Item postData={Object.values(post)} postId={Object.keys(post)[0]} key={Object.keys(post)[0]}/>)
 	return (
 		<div>
 			<Header refresh={fetchRequestHand} />
@@ -50,12 +48,12 @@ const Main: React.FC<AllProps> = ({
 	);
 }
 
-const mapStateToProps = ({post}: ApplicationState) => ({
-	loading: post.loading,
-	errors: post.errors,
-	data: post.data,
-	post: post.post
-});
+const mapStateToProps = ({posts}: ApplicationState) => {
+	return ({
+	loading: posts.loading,
+	errors: posts.errors,
+	posts: posts.posts
+})};
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
 	return {

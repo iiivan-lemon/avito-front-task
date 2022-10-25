@@ -1,32 +1,40 @@
-import { Reducer } from "redux";
-import {PostActionTypes, PostsIdState, PostState} from "./types";
+import {Reducer} from "redux";
+import {Post, PostActionTypes, PostsState} from "./types";
 
-export const initialState: PostsIdState = {
-	data: [],
-	post: null,
+export const initialState: PostsState = {
+	posts: [{0: null}],
 	errors: undefined,
 	loading: false
 };
 
 
-
-const reducer: Reducer<PostsIdState> = (state = initialState, action) => {
+const reducer: Reducer<PostsState> = (state = initialState, action) => {
 	switch (action.type) {
 
 		case PostActionTypes.FETCH_REQUEST: {
-			return { ...state, loading: true };
+			return {...state, loading: true};
 		}
 		case PostActionTypes.FETCH_SUCCESS: {
-			return { ...state, loading: false, data: action.payload };
+			let data:Array<number> = action.payload;
+			let map: {[p: number]: null}[] = data.map((id) => ({[id]:null}))
+			return {...state, loading: false, posts: map};
 		}
 		case PostActionTypes.FETCH_ERROR: {
-			return { ...state, loading: false, errors: action.payload };
+			return {...state, loading: false, errors: action.payload};
 		}
-		case PostActionTypes.FETCH_POST:{
-			return { ...state, loading: false, post: action.payload };
+		case PostActionTypes.FETCH_POST: {
+			debugger;
+			const newPosts = state.posts.map((post) => {
+				const id:string = Object.keys(post)[0];
+				return(
+				id === action.payload.id.toString()
+					? { [id]:action.payload}
+					: post
+			)});
+			return {...state, loading: false, posts: newPosts};
 		}
-		case PostActionTypes.FETCH_POST_ERROR:{
-			return { ...state, loading: false, errors: action.payload };
+		case PostActionTypes.FETCH_POST_ERROR: {
+			return {...state, loading: false, errors: action.payload};
 		}
 
 		default: {
@@ -36,4 +44,4 @@ const reducer: Reducer<PostsIdState> = (state = initialState, action) => {
 };
 
 
-export { reducer as PostsIdReducer };
+export {reducer as PostsReducer};

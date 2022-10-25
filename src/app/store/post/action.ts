@@ -16,10 +16,11 @@ export const fetchRequest: AppThunk = () => {
 		try {
 
 			// 100 последних из всех
-			const resAsk  = await axios.get(`${API_ROUTE}/newstories.json?print=pretty`) // 500
+			const resAsk  = await axios.get(`${API_ROUTE}/newstories.json?print=pretty`);// 500
+			const data = resAsk.data.splice(0,100);
 			return dispatch({
 				type: PostActionTypes.FETCH_SUCCESS,
-				payload: resAsk.data
+				payload: data
 			});
 		} catch (e) {
 			return dispatch({
@@ -29,15 +30,11 @@ export const fetchRequest: AppThunk = () => {
 	};
 };
 
-export const fetchPost: ActionCreator<ThunkAction<
-	void,
-	ApplicationState,
-	Post,
-	Action<string>
-	>> = item => {
+export const fetchPost: AppThunk =  item => {
 	return async (dispatch: Dispatch) => {
 		try {
-			const res  = await axios.get(`${API_ROUTE}/item/${item}.json?print=pretty`)
+			const res  = await axios.get(`${API_ROUTE}/item/${item}.json?print=pretty`);
+			debugger;
 			return dispatch({
 				type: PostActionTypes.FETCH_POST,
 				payload: res.data
