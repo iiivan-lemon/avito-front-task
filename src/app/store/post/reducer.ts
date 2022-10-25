@@ -26,7 +26,6 @@ const reducer: Reducer<PostsState> = (state = initialState, action) => {
 			return {...state, loading: false, errors: action.payload};
 		}
 		case PostActionTypes.FETCH_POST: {
-			debugger;
 			const newPosts = state.posts.map((post) => {
 				const id: number = post.id;
 				if (id === 0) {

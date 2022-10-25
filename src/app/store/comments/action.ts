@@ -11,31 +11,32 @@ export type AppThunk = ActionCreator<
 	ThunkAction<void, ApplicationState, null, Action<string>>
 	>;
 
-export const fetchRequest: AppThunk = () => {
-	return async (dispatch: Dispatch) => {
-		try {
+// export const fetchRequest: AppThunk = () => {
+// 	return async (dispatch: Dispatch) => {
+// 		try {
+//
+// 			// 100 последних из всех
+// 			const resAsk  = await axios.get(`${API_ROUTE}/newstories.json?print=pretty`);// 500
+// 			const data = resAsk.data.splice(0,5);
+// 			return dispatch({
+// 				type: PostActionTypes.FETCH_SUCCESS,
+// 				payload: data
+// 			});
+// 		} catch (e) {
+// 			return dispatch({
+// 				type: PostActionTypes.FETCH_ERROR
+// 			});
+// 		}
+// 	};
+// };
 
-			// 100 последних из всех
-			const resAsk  = await axios.get(`${API_ROUTE}/newstories.json?print=pretty`);// 500
-			const data = resAsk.data.splice(0,5);
-			return dispatch({
-				type: PostActionTypes.FETCH_SUCCESS,
-				payload: data
-			});
-		} catch (e) {
-			return dispatch({
-				type: PostActionTypes.FETCH_ERROR
-			});
-		}
-	};
-};
-
-export const fetchPost: AppThunk =  item => {
+export const fetchComment: AppThunk =  item => {
 	return async (dispatch: Dispatch) => {
 		try {
 			const res  = await axios.get(`${API_ROUTE}/item/${item}.json?print=pretty`);
+			debugger;
 			return dispatch({
-				type: PostActionTypes.FETCH_POST,
+				type: PostActionTypes.FETCH_COMMENT,
 				payload: res.data
 			});
 		} catch (e) {

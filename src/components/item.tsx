@@ -10,6 +10,8 @@ import {ApplicationState} from "../app/store";
 import {FC, useEffect, useLayoutEffect} from "react";
 import {useAppDispatch} from "../app/hooks";
 import {fetchPost} from "../app/store/post/action";
+import Comments from "./comment";
+import {fetchComment} from "../app/store/comments/action";
 // import {useHistory} from "react-router";
 // import {useAppDispatch, useAppSelector} from "../app/hooks";
 // import {initState} from "../app/store/modules/posts/reducer/postsReducer";
@@ -64,24 +66,6 @@ const Item: React.FC<any> = (props) => {
 		// запрос на инфу новости
 	}
 
-	//
-	// const listData = [];
-	//
-	//
-	//
-	// const dispatch = useAppDispatch();
-	// const singlePost = (id:string) => dispatch(fetchPost(id));
-	// const postSelector: any  = useAppSelector((state) => state);
-	//
-	// const postData = postSelector.PostsState.post;
-	// console.log(postData);
-	//
-	//
-	// useEffect(() => {
-	// 	singlePost(post.post);
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [])
-	//
 	let data = props.postData;
 	//
 	// console.log(data)
@@ -96,27 +80,35 @@ const Item: React.FC<any> = (props) => {
 
 	}
 	const listData = [];
-
+const listCom: JSX.Element[] = [];
 	for (const prop in data) {
 
-		if (prop !== "title" && prop !== "url") {
-			listData.push(<span>{prop}: {(data as any)[prop]?.toString()}</span>)
-		} else if (prop === "url"){
+		 if (prop === "url"){
 			listData.push(<a href={(data as any)[prop]?.toString()}>{(data as any)[prop]?.toString()}</a>)
+		}else if(prop === "kids"){
+			 data[prop].forEach((id:number)=>{
+				 listCom.push(<Comments postId={id} fetchComment={props.fetchComment}/>)
+			 })
+		 }
+		 else if (prop !== "title" && prop !== "url") {
+			listData.push(<span>{prop}: {(data as any)[prop]?.toString()}</span>)
 		}
 
 
 	}
 
 //
-	debugger;
+
 	return (
 		<div className={'item'} onClick={handleClick}>
 			{/*<div className={'item'}>*/}
 			{/*  <span className={'title'}>{props.postData[0]?.title}</span>*/}
 			<span className={'title'}>{(data as any)?.title?.toString()}</span>
 			<div className={'item-data'}>{listData}</div>
+			<span className={'comments-title'}>comments</span>
+			<>{listCom}</>
 		</div>
+
 	);
 
 }
@@ -129,7 +121,8 @@ const mapStateToProps = ({posts}: ApplicationState) => {
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
 	return {
-		fetchPost: (item: string) => dispatch(fetchPost(item))
+		fetchPost: (item: string) => dispatch(fetchPost(item)),
+		//fetchComment: (item: string) => dispatch(fetchComment(item))
 	};
 };
 
