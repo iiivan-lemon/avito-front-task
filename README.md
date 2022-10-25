@@ -1,10 +1,10 @@
-#### запуск
+### запуск
 
 In the project directory, you can run:
 ### `yarn install`
 ### `yarn start`
 
-#### деплой 
+### деплой 
 [https://elaborate-snickerdoodle-e4955a.netlify.app](https://elaborate-snickerdoodle-e4955a.netlify.app)
 
 Локально
