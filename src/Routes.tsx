@@ -14,7 +14,7 @@ const Routes: React.FC = () => (
 				)}
 			/>
 			<Route
-				path="/pages"
+				path="/:id"
 				render={() => (
 					<ItemPage/>
 				)}

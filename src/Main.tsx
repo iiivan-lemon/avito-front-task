@@ -13,7 +13,7 @@ import {Post} from "./app/store/post/types";
 interface PropsFromState {
 	loading: boolean;
 	errors?: string;
-	posts: {[key:number]:Post|null}[];
+	posts: {id:number,post:Post|null}[];
 }
 
 
@@ -39,7 +39,7 @@ const Main: React.FC<AllProps> = ({
 	}, [])
 
 
-	let listData = posts.map((post) => <Item postData={Object.values(post)} postId={Object.keys(post)[0]} key={Object.keys(post)[0]}/>)
+	let listData = posts.map((post) => <Item postData={post.post} postId={post.id} key={post.id}/>)
 	return (
 		<div>
 			<Header refresh={fetchRequestHand} />

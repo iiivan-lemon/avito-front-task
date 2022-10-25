@@ -49,17 +49,18 @@ const Item: React.FC<any> = (props) => {
 	// const getPostData = () => {
 	// 	return fetchPost(postId);
 	// };
+
 	// const dispatch = useAppDispatch();
 	// 	console.log(dispatch(fetchPost(postId)))
 	useLayoutEffect(() => {
 		props.fetchPost(props.postId)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
-	console.log(props)
+
 	let history = useHistory();
 
 	function handleClick() {
-		history.push(`/pages`);
+		history.push(`/${props.postId}`);
 		// запрос на инфу новости
 	}
 
@@ -81,7 +82,7 @@ const Item: React.FC<any> = (props) => {
 	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	// }, [])
 	//
-	let data = props.postData[0];
+	let data = props.postData;
 	//
 	// console.log(data)
 	const allowed = ['by', 'time', 'score','title'];
@@ -98,8 +99,10 @@ const Item: React.FC<any> = (props) => {
 
 	for (const prop in data) {
 
-		if (prop !== "title") {
+		if (prop !== "title" && prop !== "url") {
 			listData.push(<span>{prop}: {(data as any)[prop]?.toString()}</span>)
+		} else if (prop === "url"){
+			listData.push(<a href={(data as any)[prop]?.toString()}>{(data as any)[prop]?.toString()}</a>)
 		}
 
 

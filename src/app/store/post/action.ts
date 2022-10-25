@@ -17,7 +17,7 @@ export const fetchRequest: AppThunk = () => {
 
 			// 100 последних из всех
 			const resAsk  = await axios.get(`${API_ROUTE}/newstories.json?print=pretty`);// 500
-			const data = resAsk.data.splice(0,100);
+			const data = resAsk.data.splice(0,5);
 			return dispatch({
 				type: PostActionTypes.FETCH_SUCCESS,
 				payload: data
